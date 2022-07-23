@@ -11,23 +11,7 @@ interface ITask {
 }
 
 function App() {
-  const [listTasks, setListTasks] = useState<ITask[]>([
-    {
-      done: false,
-      description:
-        "Integer urna interdum massa libero auctor neque turpis turpis semper Duis vel sed fames integer.",
-    },
-    {
-      done: false,
-      description:
-        "Integer1 urna interdum massa libero auctor neque turpis turpis semper Duis vel sed fames integer.",
-    },
-    {
-      done: false,
-      description:
-        "Integer2 urna interdum massa libero auctor neque turpis turpis semper Duis vel sed fames integer.",
-    },
-  ]);
+  const [listTasks, setListTasks] = useState<ITask[]>([]);
 
   const handleChecked = (index: number) => {
     const ListCheck = [...listTasks];
@@ -46,10 +30,16 @@ function App() {
 
     setListTasks(ListCheck);
   };
+
+  const handleAddTask = (value: string) => {
+    const ListCheck = [...listTasks];
+    ListCheck.push({ done: false, description: value });
+    setListTasks(ListCheck);
+  };
   return (
     <>
       <Header />
-      <AddTask />
+      <AddTask listTasks={listTasks} handleAddTask={handleAddTask} />
       <TaskBoard
         listTasks={listTasks}
         handleChecked={handleChecked}

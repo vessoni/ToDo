@@ -1,4 +1,4 @@
-import { PlusCircle, Trash } from "phosphor-react";
+import { ClipboardText, PlusCircle, Trash } from "phosphor-react";
 import { Dispatch, useState } from "react";
 
 import logo from "../assets/logo.svg";
@@ -44,6 +44,19 @@ function TaskBoard({ listTasks, handleChecked, handleDelete }: Props) {
           Done <span>{handleCountTasksDone()}</span>
         </div>
       </div>
+      {listTasks.length === 0 && (
+        <div className={styles.itemEmpty}>
+          <div>
+            <ClipboardText size={120} weight="thin" />
+          </div>
+          <div className={styles.itemEmpty}>
+            <p>
+              <strong> You don't have tasks registered yet.</strong>
+            </p>
+            <p>Create tasks and organize your to-do items.</p>
+          </div>
+        </div>
+      )}
 
       {listTasks.map((task, index) => {
         return (

@@ -30,6 +30,25 @@
   font-weight: bold;
 }
 
+.itemEmpty{
+  border: 1px solid var(--gray-400);
+  border-radius: 8px;
+  background-color: var(--gray-500);
+  max-width: 49rem;
+  margin: 0 auto;
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.65rem
+}
+
+/* .itemText{
+  color: var( --gray-100);
+  font-weight: 300;
+} */
+
 .item{
   border: 1px solid var(--gray-400);
   border-radius: 8px;
@@ -38,7 +57,7 @@
   margin: 0 auto;
   padding: 1.3rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin-top: 0.65rem
 }
