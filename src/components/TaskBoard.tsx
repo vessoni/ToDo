@@ -1,50 +1,72 @@
 import { PlusCircle, Trash } from "phosphor-react";
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 
 import logo from "../assets/logo.svg";
-import CheckBox from "./Checkbox";
+import CheckBox from "./CheckBox";
 
 import styles from "./TaskBoard.module.css";
 
-function TaskBoard() {
-  const [checked, setChecked] = useState(false);
+interface ITask {
+  done: boolean;
+  description: string;
+}
+
+interface Props {
+  listTasks: ITask[];
+  // setListTasks: Dispatch<React.SetStateAction<ITask[]>>;
+  handleChecked: any;
+  handleDelete: any;
+}
+
+function TaskBoard({ listTasks, handleChecked, handleDelete }: Props) {
+  const handleCountTasks = () => {
+    return listTasks.length;
+  };
+
+  const handleCountTasksDone = () => {
+    return listTasks.filter((e) => e.done === true).length;
+  };
+
+  const handleCheck = (index: number) => {
+    handleChecked(index);
+  };
+  const handleTaskDelete = (index: number) => {
+    handleDelete(index);
+  };
 
   return (
     <>
       <div className={styles.count}>
         <div className={styles.createdTask}>
-          Created Tasks <span>0</span>
+          Created Tasks <span>{handleCountTasks()}</span>
         </div>
         <div className={styles.done}>
-          Done <span>0</span>
+          Done <span>{handleCountTasksDone()}</span>
         </div>
       </div>
 
-      <div className={styles.item}>
-        <div onClick={() => setChecked(!checked)}>
-          <CheckBox checked={checked} />
-        </div>
-        <span className={styles.itemText}>
-          Integer urna interdum massa libero auctor neque turpis turpis semper.
-          Duis vel sed fames integer.
-        </span>
-        <div className={styles.trash}>
-          <Trash size={20} />
-        </div>
-      </div>
+      {listTasks.map((task, index) => {
+        return (
+          <div className={styles.item} key={task.description}>
+            <div onClick={() => handleCheck(index)}>
+              <CheckBox checked={!task.done} />
+            </div>
+            {!task.done && (
+              <span className={styles.itemText}>{task.description}</span>
+            )}
+            {task.done && (
+              <span className={styles.itemTextDone}>{task.description}</span>
+            )}
 
-      <div className={styles.item}>
-        <div onClick={() => setChecked(!checked)}>
-          <CheckBox checked={checked} />
-        </div>
-        <span className={styles.itemText}>
-          Integer urna interdum massa libero auctor neque turpis turpis semper.
-          Duis vel sed fames integer.
-        </span>
-        <div className={styles.trash}>
-          <Trash size={20} />
-        </div>
-      </div>
+            <div
+              className={styles.trash}
+              onClick={() => handleTaskDelete(index)}
+            >
+              <Trash size={20} />
+            </div>
+          </div>
+        );
+      })}
     </>
   );
 }
